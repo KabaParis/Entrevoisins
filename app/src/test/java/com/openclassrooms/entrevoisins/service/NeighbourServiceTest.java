@@ -11,6 +11,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
@@ -40,4 +41,40 @@ public class NeighbourServiceTest {
         service.deleteNeighbour(neighbourToDelete);
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
     }
+
+    @Test
+    public void getNeighbourByIdWithSuccess() {
+        Neighbour expectedNeighbour = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0);
+        Neighbour neighbourTest = service.getNeighboursById(expectedNeighbour.getId());
+        assertEquals(expectedNeighbour.getId(), neighbourTest.getId());
+
+    }
+
+    @Test
+    public void addNeighbourToFavoriteListWithSuccess() {
+        Neighbour neighbour = service.getNeighbours().get(0);
+        service.addFavorite(neighbour);
+        assert(service.getFavorites().contains(neighbour));
+    }
+
+    @Test
+    public void removeNeighbourFromFavoriteListWithSuccess() {
+        Neighbour neighbour = service.getNeighbours().get(0);
+        service.addFavorite(neighbour);
+
+        service.deleteFavorite(neighbour);
+        assertFalse(service.getFavorites().contains(neighbour));
+
+    }
+
+    @Test
+    public void getNeighbourAvatarWithSuccess() {
+        Neighbour expectedNeighbour = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0);
+        Neighbour neighbourTest = service.getNeighboursById(expectedNeighbour.getId());
+        assertEquals(expectedNeighbour.getAvatarUrl(), neighbourTest.getAvatarUrl());
+
+    }
+
+
 }
+

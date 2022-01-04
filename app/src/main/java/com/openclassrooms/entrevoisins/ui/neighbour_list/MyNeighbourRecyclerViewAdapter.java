@@ -73,7 +73,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             }
         });
 
-
     }
 
     @Override
@@ -81,7 +80,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         return mNeighbours.size();
 
     }
-
 
     public Neighbour getNeighbour(int position){
        return this.mNeighbours.get(position);

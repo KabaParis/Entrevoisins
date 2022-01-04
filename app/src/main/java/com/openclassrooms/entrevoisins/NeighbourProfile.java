@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.di.DI;
@@ -38,7 +39,6 @@ public class NeighbourProfile extends AppCompatActivity {
     private TextView mAboutMeLyt;
 
     private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
     private Neighbour mNeighbour;
     private Integer mId;
 
@@ -60,23 +60,9 @@ public class NeighbourProfile extends AppCompatActivity {
         mAboutMeLyt = findViewById(R.id.aboutMeLyt);
 
 
-
-       // long id = getIntent().getLongExtra("id",0);
-        // mApiService = DI.getNeighbourApiService();
-        // mNeighbours = mApiService.getNeighbours();
-
-        long id = getIntent().getLongExtra("id",0);
-         mApiService = DI.getNeighbourApiService();
-         mNeighbours = mApiService.getNeighbours();
-
-
-        for (Neighbour n : mNeighbours) {
-            if (n.getId() == id)
-                mNeighbour = n;
-        }
-
-
-        Log.i("id",mNeighbour.toString());
+        long id = getIntent().getLongExtra("id", 0);
+        mApiService = DI.getNeighbourApiService();
+        mNeighbour = mApiService.getNeighboursById(id);
 
 
         Glide.with(mAvatar.getContext())
@@ -89,32 +75,47 @@ public class NeighbourProfile extends AppCompatActivity {
         this.mAboutMeLyt.setText(mNeighbour.getAboutMe());
         this.mPhone.setText(mNeighbour.getPhoneNumber());
         this.mNeighbourDetailName.setText(mNeighbour.getName());
-        this.mWebsite.setText("www.facebook.fr/"+mNeighbour.getName());
+        this.mWebsite.setText("www.facebook.fr/" + mNeighbour.getName());
 
+        // call
+         setFavorite();
 
-    // Set FloatingActionButton
-    mFavorite.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+        // Set Favorite FloatingActionButton
+        mFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            if(!mApiService.getFavorites().contains(mNeighbour)){
-                mApiService.addFavorite(mNeighbour);
+                mFavorite.setActivated(!mFavorite.isActivated());
+                if (mFavorite.isActivated()) {
+                    mApiService.addFavorite(mNeighbour);
+                    mFavorite.setImageResource(R.drawable.ic_star_yellow_24);
+
+                } else {
+                    mApiService.deleteFavorite(mNeighbour);
+                    mFavorite.setImageResource(R.drawable.ic_star_border_yellow_24);
+
+                }
+
             }
 
-            else mApiService.deleteFavorite(mNeighbour);
+
+            });
+
+                // Set BackButton
+                mBack_button.setOnClickListener(v -> finish());
+
+
+
+            }
+    // call method boolean Api
+    public void setFavorite(){
+        if (mApiService.setFavorite(mNeighbour) == true) {
+            mFavorite.setActivated(true);
+            mFavorite.setImageResource(R.drawable.ic_star_yellow_24);
+        } else {
+            mFavorite.setImageResource(R.drawable.ic_star_border_yellow_24);
         }
-
-
-    });
-
-
-    // Set BackButton
-    mBack_button.setOnClickListener(v -> startActivity(new Intent
-            (NeighbourProfile.this, ListNeighbourActivity.class)));
-
-    // Set FragmentFavorite
-
 
     }
 
-}
+        }
