@@ -48,6 +48,7 @@ public class NeighbourProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neighbour_profile);
 
+        // link widgets to layout attributes
 
         mAvatar = findViewById(R.id.avatar);
         mAvatarName = findViewById(R.id.item_list_avatarName);
@@ -59,11 +60,13 @@ public class NeighbourProfile extends AppCompatActivity {
         mWebsite = findViewById(R.id.website);
         mAboutMeLyt = findViewById(R.id.aboutMeLyt);
 
+        // get neighbour id by the api service
 
         long id = getIntent().getLongExtra("id", 0);
         mApiService = DI.getNeighbourApiService();
         mNeighbour = mApiService.getNeighboursById(id);
 
+        //get attributes of widgets
 
         Glide.with(mAvatar.getContext())
                 .load(mNeighbour.getAvatarUrl())
@@ -98,13 +101,10 @@ public class NeighbourProfile extends AppCompatActivity {
 
             }
 
-
             });
 
                 // Set BackButton
                 mBack_button.setOnClickListener(v -> finish());
-
-
 
             }
     // call method boolean Api

@@ -42,6 +42,7 @@ public class NeighbourServiceTest {
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
     }
 
+
     @Test
     public void getNeighbourByIdWithSuccess() {
         Neighbour expectedNeighbour = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0);
@@ -64,14 +65,6 @@ public class NeighbourServiceTest {
 
         service.deleteFavorite(neighbour);
         assertFalse(service.getFavorites().contains(neighbour));
-
-    }
-
-    @Test
-    public void getNeighbourAvatarWithSuccess() {
-        Neighbour expectedNeighbour = DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0);
-        Neighbour neighbourTest = service.getNeighboursById(expectedNeighbour.getId());
-        assertEquals(expectedNeighbour.getAvatarUrl(), neighbourTest.getAvatarUrl());
 
     }
 

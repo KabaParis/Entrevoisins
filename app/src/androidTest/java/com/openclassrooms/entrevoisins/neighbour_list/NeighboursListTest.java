@@ -1,6 +1,7 @@
 
 package com.openclassrooms.entrevoisins.neighbour_list;
 
+import android.os.SystemClock;
 import android.support.test.espresso.action.Swipe;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -58,7 +59,7 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
-        onView(ViewMatchers.withId(R.id.list_neighbours))
+        onView(Matchers.allOf(ViewMatchers.isDisplayed(),ViewMatchers.withId(R.id.list_neighbours)))
                 .check(matches(hasMinimumChildCount(1)));
     }
 
@@ -68,13 +69,14 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
+        onView(Matchers.allOf(ViewMatchers.isDisplayed(),ViewMatchers.withId(R.id.list_neighbours))).check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
-        onView(ViewMatchers.withId(R.id.list_neighbours))
+        onView(Matchers.allOf(ViewMatchers.isDisplayed(),ViewMatchers.withId(R.id.list_neighbours)))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT - 1));
+        onView(Matchers.allOf(ViewMatchers.isDisplayed(),ViewMatchers.withId(R.id.list_neighbours))).check(withItemCount(ITEMS_COUNT - 1));
     }
+
 
     /**
      * When we click on an item, it shows the neighbour activity details
@@ -100,9 +102,7 @@ public class NeighboursListTest {
         //Then : check if name contains neighbour's name
         onView(withId(R.id.item_list_avatarName)).check(matches(withText("Caroline")));
 
-
     }
-
 
     /**
      * We ensure that the favorite button is functioning properly
@@ -112,7 +112,7 @@ public class NeighboursListTest {
         //Given : The Favorite List is empty
         //Perform a click on item position to open the activity details
         onView(Matchers.allOf(ViewMatchers.isDisplayed(),ViewMatchers.withId(R.id.list_neighbours)))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(5, ViewActions.click()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
 
         // Then : click on favorite button
         onView(withId(R.id.favorite)).perform(ViewActions.click());
@@ -120,19 +120,18 @@ public class NeighboursListTest {
         // Then : return back
         onView(withId(R.id.back_button)).perform(ViewActions.click());
 
-        // Then : swipe to the right
-       // onView(withId(R.id.tabItem2)).perform(ViewActions.click()); (Pourquoi cette méthode de clique ne passe pas ?)
+        // Then : swipe to the left
         onView(Matchers.allOf(ViewMatchers.isDisplayed(),ViewMatchers.withId(R.id.list_neighbours)))
                 .perform(ViewActions.swipeLeft());
+                SystemClock.sleep(1000);
 
         // Then : check if the item is on the favorite list
         onView(Matchers.allOf(ViewMatchers.isDisplayed(),ViewMatchers.withId(R.id.list_neighbours)))
-                .check(matches(ViewMatchers.withId(6)));
-              //  .check(withItemCount(1));
+                .check(withItemCount(1));
 
         // Then : click on the item
         onView(Matchers.allOf(ViewMatchers.isDisplayed(),ViewMatchers.withId(R.id.list_neighbours)))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(5, ViewActions.click()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
 
         // Then : click on favorite button
         onView(withId(R.id.favorite)).perform(ViewActions.click());
@@ -143,7 +142,6 @@ public class NeighboursListTest {
         // Then : check if the Favorite list is empty
         onView(Matchers.allOf(ViewMatchers.isDisplayed(),ViewMatchers.withId(R.id.list_neighbours)))
                 .check(withItemCount(0));
-
 
     }
 
