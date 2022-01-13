@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins;
+package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
@@ -40,7 +41,6 @@ public class NeighbourProfile extends AppCompatActivity {
 
     private NeighbourApiService mApiService;
     private Neighbour mNeighbour;
-    private Integer mId;
 
 
     @Override
@@ -48,7 +48,7 @@ public class NeighbourProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neighbour_profile);
 
-        // link widgets to layout attributes
+        // get the views identified by their attributes
 
         mAvatar = findViewById(R.id.avatar);
         mAvatarName = findViewById(R.id.item_list_avatarName);
@@ -107,7 +107,7 @@ public class NeighbourProfile extends AppCompatActivity {
                 mBack_button.setOnClickListener(v -> finish());
 
             }
-    // call method boolean Api
+    // call method boolean DummyApi
     public void setFavorite(){
         if (mApiService.setFavorite(mNeighbour) == true) {
             mFavorite.setActivated(true);

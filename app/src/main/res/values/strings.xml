@@ -6,6 +6,7 @@
     <string name="activity_neighbour_profile">Neighbour profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="neighbours_profile_fragment">Neighbours profile</string>
+    <string name="about_me">A propos de moi</string>
 
 
 </resources>

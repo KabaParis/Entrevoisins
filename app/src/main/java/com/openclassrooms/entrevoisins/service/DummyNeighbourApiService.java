@@ -41,6 +41,9 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     }
 
 
+
+
+
     // get favorites from the list
 
     private List<Neighbour> favorites = new ArrayList<>();
@@ -90,6 +93,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
             }
         return null;
     }
+
 
 
     // set favorite according to its status

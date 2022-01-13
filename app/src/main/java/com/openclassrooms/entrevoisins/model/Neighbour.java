@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
